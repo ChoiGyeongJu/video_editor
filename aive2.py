@@ -102,6 +102,7 @@ for i in range(len(st.session_state.menu_title)):
             st.write("HOME")
             if st.button("TRY AGAIN?"):
                 # pyautogui.hotkey("ctrl", "r", "F5")
+                pass
 
         elif i == len(st.session_state.menu_title) - 1:    # 비디오 합치는 부분
             if st.session_state.clip_file.count([]) == len(st.session_state.clip_file):
