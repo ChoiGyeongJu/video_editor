@@ -1,0 +1,6 @@
+moviepy
+pyautogui
+streamlit-option-menu
+Pillow
+streamlit
+pafy
