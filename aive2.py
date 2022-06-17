@@ -1,15 +1,27 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
 
+import os
 import moviepy.editor as mp
 import pafy
 import math
 import pyautogui
+from streamlit_option_menu import option_menu
 import uuid
 import datetime
 
 from utils import get_keyword, get_youtube, keyword_callback ,youtube_callback,\
                  url_callback, merge_callback, cut_video, merge_video, init_again
+
+user_name = os.path.expanduser('~')
+try:
+    os.makedirs(f'{user_name}//Desktop//video_editor')
+    os.makedirs(f'{user_name}//Desktop//video_editor//clipFiles')
+    os.makedirs(f'{user_name}//Desktop//video_editor//mergedFiles')
+except FileExistsError:
+    pass
+
+save_dir_clip = os.path.join(os.path.expanduser('~'), 'Desktop', 'video_editor', 'clipFiles')
+save_dir_video= os.path.join(os.path.expanduser('~'), 'Desktop', 'video_editor', 'mergedFiles')
 
 st.set_page_config(layout="wide")
 exec(open("init.py", encoding='UTF-8').read())   # session state 변수 초기화
@@ -109,9 +121,10 @@ for i in range(len(st.session_state.menu_title)):
                     for clip in st.session_state.clip_list:
                         final_clip.append(mp.VideoFileClip(clip))
                     final_video = mp.concatenate_videoclips(final_clip)
-                    final_video.write_videofile("C:/Users/82102/aive_streamlit/mergedFile/" + fileName)
+                    # final_video.write_videofile("C:/Users/82102/aive_streamlit/mergedFile/" + fileName)
+                    final_video.write_videofile(os.path.join(save_dir_video, fileName))
                     st.success("MERGE FINISHED!")
-                    st.video("C:/Users/82102/aive_streamlit/mergedFile/" + fileName)
+                    st.video(os.path.join(save_dir_video, fileName))
 
         else:   # 비디오 자르고 자른것들 보는 부분
             url = st.session_state.youtube_url[i-1]
@@ -133,7 +146,8 @@ for i in range(len(st.session_state.menu_title)):
                 if st.button("CUT VIDEO"):
                     if (end_time != 0) & (start_time >= 0) & (start_time < end_time):
                         fileName = str(uuid.uuid1())
-                        clip_file_title = "C:/Users/82102/aive_streamlit/clipFile/" + fileName[:8] + ".mp4"
+                        file_title = fileName[:8] + ".mp4"
+                        clip_file_title = os.path.join(save_dir_clip, file_title)
                         clip = cut_video(video, start_time, end_time)
                         
                         st.session_state.start_end[i-1].append([start_time, end_time])
