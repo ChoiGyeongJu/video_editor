@@ -5,6 +5,7 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from time import sleep
+import streamlit as st
 
 def get_keyword(scripts):
     full_text = scripts
@@ -60,3 +61,43 @@ def get_youtube(keyword_list):
     
     return total_url
     # return url_info_list
+
+def keyword_callback():
+    st.session_state.get_keyword = True
+
+def youtube_callback():
+    st.session_state.get_youtube = True
+
+def url_callback(url_list):
+    st.session_state.youtube_url = url_list
+
+def merge_callback():
+    st.session_state.merge_video = True
+
+def cut_video(video, start, end):
+    clip = mp.VideoFileClip(video).subclip(start, end)
+    return clip
+
+def merge_video(clip_list):
+    final_clip = mp.concatenate_videoclips(clip_list)
+    return final_clip
+
+def init_again():
+    st.session_state.init_menu       = True
+    st.session_state.option_menu     = []
+    st.session_state.menu_title      = []
+    st.session_state.edited_clip     = []
+    st.session_state.start_end       = []
+    st.session_state.init_menu       = True
+    st.session_state.option_menu     = []
+    st.session_state.menu_title      = []
+    st.session_state.get_keyword     = False
+    st.session_state.get_youtube     = False
+    st.session_state.youtube_url     = []
+    st.session_state.start_time      = []
+    st.session_state.end_time        = []
+    st.session_state.before_checkbox = []
+    st.session_state.url_checkbox    = []
+    st.session_state.clip_list       = []
+    st.session_state.merge_video     = False
+        
