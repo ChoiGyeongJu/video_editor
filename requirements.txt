@@ -10,3 +10,5 @@ yake
 selenium
 chromedriver-binary
 webdriver-manager
+chromedriver-py
+chromedriver_autoinstaller
