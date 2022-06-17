@@ -13,6 +13,8 @@ import datetime
 from utils import get_keyword, get_youtube, keyword_callback ,youtube_callback,\
                  url_callback, merge_callback, cut_video, merge_video, init_again
 
+os.environ['DISPLAY'] = ':0'
+
 user_name = os.path.expanduser('~')
 try:
     os.makedirs(f'{user_name}//Desktop//video_editor')
