@@ -5,15 +5,13 @@ import os
 import moviepy.editor as mp
 import pafy
 import math
-import pyautogui
+# import pyautogui
 
 import uuid
 import datetime
 
 from utils import get_keyword, get_youtube, keyword_callback ,youtube_callback,\
                  url_callback, merge_callback, cut_video, merge_video, init_again
-
-# os.environ['DISPLAY'] = ':0'
 
 user_name = os.path.expanduser('~')
 try:
@@ -103,7 +101,7 @@ for i in range(len(st.session_state.menu_title)):
         if i == 0:  # 새로고침해서 키워드 분석부터 다시 시작하는 부분
             st.write("HOME")
             if st.button("TRY AGAIN?"):
-                pyautogui.hotkey("ctrl", "r", "F5")
+                # pyautogui.hotkey("ctrl", "r", "F5")
 
         elif i == len(st.session_state.menu_title) - 1:    # 비디오 합치는 부분
             if st.session_state.clip_file.count([]) == len(st.session_state.clip_file):
