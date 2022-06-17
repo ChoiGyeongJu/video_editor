@@ -83,8 +83,8 @@ def merge_video(clip_list):
     return final_clip
 
 def init_again():
-    st.session_state.menu_title      = []
     st.session_state.option_menu     = []
+    st.session_state.menu_title      = []
     st.session_state.edited_clip     = []
     st.session_state.start_end       = []
     st.session_state.end_time        = []
@@ -95,4 +95,5 @@ def init_again():
     st.session_state.get_keyword     = False
     st.session_state.get_youtube     = False
     st.session_state.youtube_url     = []
-    st.session_state.init_menu       = True        
+    st.session_state.init_menu       = True   
+         
