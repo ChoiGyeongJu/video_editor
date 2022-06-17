@@ -6,3 +6,6 @@ Pillow
 streamlit
 pafy
 youtube-dl==2020.12.2
+yake
+selenium
+webdriver-manager
