@@ -4,3 +4,4 @@ streamlit-option-menu
 Pillow
 streamlit
 pafy
+youtube-dl==2020.12.2
