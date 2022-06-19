@@ -33,26 +33,11 @@ exec(open("init.py", encoding='UTF-8').read())   # session state 변수 초기�
 # css 부분
 st.markdown("""
 <style>
-.sidebar-title {
-    font-size: 16px;
-    font-weight: 800;
-    margin-borrom: 24px;
-}
-.video-title {
-    font-size: 28px;
-    font-weight: 800;
-    text-align: center;
-    margin-top: 30px;
-}
-.bottom-line {
-    margin-top: 15px;
-    border-bottom: 1px solid black;
-}
-.footer {
-    margin-top: 250px;
-    margin-bottom: -160px;
-    color: gray;
-}
+.sidebar-title {font-size: 16px;font-weight: 800;margin-borrom: 24px;}
+.video-title {font-size: 28px;font-weight: 800;text-align: center;margin-top: 30px;}
+.bottom-line {margin-top: 15px;border-bottom: 1px solid black;}
+.footer {margin-top: 250px;margin-bottom: -160px;color: gray;}
+.explain {font-size: 26px;font-weight: 600;}
 </style>
 """, unsafe_allow_html=True)
 hide_st_style = """
@@ -69,6 +54,11 @@ st.title('VIDEO EDITOR')
 
 
 if st.session_state.init_menu == True:
+    st.markdown(f'<p class="explain">1. TYPE OR UPLOAD SCRIPTS</p>', unsafe_allow_html=True)
+    st.markdown(f'<p class="explain">2. GET KEYWORDS FROM SCRIPTS</p>', unsafe_allow_html=True)
+    st.markdown(f'<p class="explain">3. GET YOUTUBE VIDEOS FROM KEYWORDS</p>', unsafe_allow_html=True)
+    st.markdown(f'<p class="explain">4. EDIT VIDEOS AND MERGE THEM</p>', unsafe_allow_html=True)
+
     uploaded_scripts = st.file_uploader("upload scripts", type=["txt"])
 
     if uploaded_scripts == None:
@@ -104,7 +94,6 @@ if st.session_state.init_menu == True:
                     st.session_state.menu_title.append(title)   
                 st.session_state.menu_title.append("MERGE HERE")
                 st.session_state.init_menu = False
-
 
 
 with st.sidebar:
