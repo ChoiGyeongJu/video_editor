@@ -48,8 +48,21 @@ st.markdown("""
     margin-top: 15px;
     border-bottom: 1px solid black;
 }
+.footer {
+    margin-top: 250px;
+    margin-bottom: -160px;
+    color: gray;
+}
 </style>
 """, unsafe_allow_html=True)
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 st.sidebar.title('AIVE MENU')
 st.title('VIDEO EDITOR')
@@ -59,7 +72,7 @@ if st.session_state.init_menu == True:
     uploaded_scripts = st.file_uploader("upload scripts", type=["txt"])
 
     if uploaded_scripts == None:
-        scripts = st.text_area(label="Scripts", height=360, placeholder="스크립트를 입력하세요.")
+        scripts = st.text_area(label="Scripts", height=360, placeholder="TYPE OR UPLOAD SCRIPTS")
     else:
         raw_text = str(uploaded_scripts.read().lower())
         scripts_1 = raw_text.replace('\r', '')
@@ -165,5 +178,6 @@ for i in range(len(st.session_state.menu_title)):
                         section = st.session_state.start_end[i-1][ij]
                         st.markdown(f'<p class="video-title">EDITED VIDEO ({section[0]}sec ~ {math.floor(section[1])}sec)</p>', unsafe_allow_html=True)
                         st.video(st.session_state.clip_file[i-1][ij])
-                    
-                    
+    
+
+st.markdown(f'<p class="footer">email - gyeongju5142@gmail.com</p>', unsafe_allow_html=True)
