@@ -3,6 +3,7 @@ import pafy
 import yake
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.core.utils import ChromeType
 from selenium.webdriver.common.by import By
 from time import sleep
 import streamlit as st
@@ -26,8 +27,8 @@ def get_youtube(keyword_list):
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    browser = webdriver.Chrome(ChromeDriverManager().install() ,options=options)
-
+    # browser = webdriver.Chrome(ChromeDriverManager().install() ,options=options)
+    browser = webdriver.Chrome(ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install() ,options=options)
     Video_num = 2
     url_info_list       = {}   # url info list
     total_url           = []   # 스크립트 하나에 해당하는 전체 url
