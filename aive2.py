@@ -10,7 +10,7 @@ import uuid
 import datetime
 
 from utils import get_keyword, get_youtube, keyword_callback ,youtube_callback,\
-                 url_callback, merge_callback, cut_video, merge_video, init_again
+                 url_callback, cut_video
 
 # import pyautogui
 
@@ -25,7 +25,7 @@ except FileExistsError:
 save_dir_clip = os.path.join(os.path.expanduser('~'), 'Desktop', 'video_editor', 'clipFiles')
 save_dir_video= os.path.join(os.path.expanduser('~'), 'Desktop', 'video_editor', 'mergedFiles')
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide", page_title="VIDEO EDITOR", page_icon="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfdswurbBs3HTOL-AvcRJT3xnQE_7a9v-GGg&usqp=CAU")
 exec(open("init.py", encoding='UTF-8').read())   # session state 변수 초기화
 
 # css 부분
@@ -190,6 +190,6 @@ for i in range(len(st.session_state.menu_title)):
                         section = st.session_state.start_end[i-1][ij]
                         st.markdown(f'<p class="video-title">EDITED VIDEO ({section[0]}sec ~ {math.floor(section[1])}sec)</p>', unsafe_allow_html=True)
                         st.video(st.session_state.clip_file[i-1][ij])
-    
+
 
 st.markdown(f'<p class="footer">email - gyeongju5142@gmail.com</p>', unsafe_allow_html=True)
