@@ -35,6 +35,7 @@ st.markdown("""
 <style>
 .sidebar-title {font-size: 16px;font-weight: 800;margin-borrom: 24px;}
 .video-title {font-size: 28px;font-weight: 800;text-align: center;margin-top: 30px;}
+.video_list_order {font-size: 20px;text-align: center;}
 .bottom-line {margin-top: 15px;border-bottom: 1px solid black;}
 .footer {margin-top: 250px;margin-bottom: -160px;color: gray;}
 .explain {font-size: 26px;font-weight: 600;}
@@ -42,11 +43,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 hide_st_style = """
             <style>
-            #MainMenu {visibility: hidden;}
+            # MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
-            header {visibility: hidden;}
             </style>
             """
+            # header {visibility: hidden;}
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 st.sidebar.title('AIVE MENU')
@@ -112,19 +113,36 @@ for i in range(len(st.session_state.menu_title)):
             if st.session_state.clip_file.count([]) == len(st.session_state.clip_file):
                 st.write("THERE IS NO CLIP")
             else:
-                st.write("VIDEO CLIP LIST")                
-                video_num = 0
+                st.write("VIDEO CLIP LIST")
+                total_video_clip = {}              
+                layout_num = 0
+                video_num  = 1
                 cols = st.columns(3)
                 for k in range(len(st.session_state.clip_file)):
                     for ik in range(len(st.session_state.clip_file[k])):
-                        cols[video_num % 3].video(st.session_state.clip_file[k][ik])
+                        video_title = str(video_num) + "TH CLIP"
+                        cols[layout_num % 3].video(st.session_state.clip_file[k][ik])
+                        cols[layout_num % 3].markdown(f'<p class="video_list_order">{video_title}</p>', unsafe_allow_html=True)
+                        total_video_clip[video_title] = st.session_state.clip_file[k][ik]
+                        # total_video_clip.append(st.session_state.clip_file[k][ik])
+                        layout_num += 1
                         video_num += 1
                 
+                for x in range(8):
+                    st.write('\n')
+                    
+                a = st.multiselect(options=total_video_clip, label="CHOOSE CLIPS TO MERGE (Merges in the order you select)")
+                
                 if st.button("MERGE VIDEO"):
+                    selected_clip = []
+                    for j in range(len(a)):
+                        selected_clip.append(total_video_clip[a[j]])
+
                     fileName = str(uuid.uuid1())[:8] + str(datetime.datetime.utcnow())[:10] + ".mp4"
                     
                     final_clip = []
-                    for clip in st.session_state.clip_list:
+                    # for clip in st.session_state.clip_list:
+                    for clip in selected_clip:
                         final_clip.append(mp.VideoFileClip(clip))
                     final_video = mp.concatenate_videoclips(final_clip)
                     # final_video.write_videofile("C:/Users/82102/aive_streamlit/mergedFile/" + fileName)
