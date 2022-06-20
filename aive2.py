@@ -12,8 +12,7 @@ import datetime
 from utils import get_keyword, get_youtube, keyword_callback ,youtube_callback,\
                  url_callback, merge_callback, cut_video, merge_video, init_again
 
-os.environ['DISPLAY'] = ':1'
-import pyautogui
+# import pyautogui
 
 user_name = os.path.expanduser('~')
 try:
@@ -108,9 +107,9 @@ with st.sidebar:
 for i in range(len(st.session_state.menu_title)):
     if st.session_state.option_menu == st.session_state.menu_title[i]:
         if i == 0:  # 새로고침해서 키워드 분석부터 다시 시작하는 부분
-            # st.write("IF YOU WANT TO TRY AGAIN, PLEASE REFRESH PAGE")
-            if st.button("TRY AGAIN?"):
-                pyautogui.hotkey("ctrl", "r", "F5")
+            st.write("IF YOU WANT TO TRY AGAIN, PLEASE REFRESH PAGE")
+            # if st.button("TRY AGAIN?"):
+            #     pyautogui.hotkey("ctrl", "r", "F5")
 
         elif i == len(st.session_state.menu_title) - 1:    # 비디오 합치는 부분
             if st.session_state.clip_file.count([]) == len(st.session_state.clip_file):
