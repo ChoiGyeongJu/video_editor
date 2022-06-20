@@ -73,7 +73,7 @@ if st.session_state.init_menu == True:
     keyword_list  = []
     url_info_list = []
     
-    cols = st.columns(4)
+    cols = st.columns(3)
     st.session_state.keyword_num = cols[0].number_input(label="Enter the number of keywords to extract", step=1)
     st.session_state.each_url_num = cols[1].number_input(label="Enter the number of urls(each keyword) to extract", step=1)
 
