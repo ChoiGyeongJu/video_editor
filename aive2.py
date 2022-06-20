@@ -72,15 +72,19 @@ if st.session_state.init_menu == True:
 
     keyword_list  = []
     url_info_list = []
+    
+    cols = st.columns(4)
+    st.session_state.keyword_num = cols[0].number_input(label="Enter the number of keywords to extract", step=1)
+    st.session_state.each_url_num = cols[1].number_input(label="Enter the number of urls(each keyword) to extract", step=1)
 
     if (st.button("GET KEYWORD!", on_click=keyword_callback) or st.session_state.get_keyword):  # 키워드 추출 버튼
         st.write('KEYWORD LIST')
-        keyword_list = get_keyword(scripts)
+        keyword_list = get_keyword(scripts, st.session_state.keyword_num)
         st.write(keyword_list)
 
         if (st.button("GET YOUTUBE!", on_click=youtube_callback) or st.session_state.get_youtube):  # url 추출 버튼
             if st.session_state.youtube_url == []:
-                url_info_list = get_youtube(keyword_list)
+                url_info_list = get_youtube(keyword_list, st.session_state.each_url_num)
                 url_callback(url_info_list)
                 st.write('CLICK ABOVE BUTTON AGAIN TO ANALYZE')
                 st.write(st.session_state.youtube_url)
@@ -130,7 +134,7 @@ for i in range(len(st.session_state.menu_title)):
                 
                 for x in range(8):
                     st.write('\n')
-                    
+
                 a = st.multiselect(options=total_video_clip, label="CHOOSE CLIPS TO MERGE (Merges in the order you select)")
                 
                 if st.button("MERGE VIDEO"):
@@ -157,15 +161,18 @@ for i in range(len(st.session_state.menu_title)):
             res_list = []
             for j in best.videostreams:
                 res_list.append(str(j))
-            video_index = res_list.index("video:webm@1280x720")
+            if "video:webm@1280x720" in res_list:
+                video_index = res_list.index("video:webm@1280x720")
+            else:
+                video_index = res_list.index("video:webm@640x360")
             value = best.videostreams[video_index]
             video = value.url_https
             with col1:
                 st.markdown(f'<p class="video-title">{i}th YOUTUBE VIDEO</p>', unsafe_allow_html=True)
                 st.video(url)
                 st.markdown(f'<p class="sidebar-title">SET TIME {i}th VIDEO</p>', unsafe_allow_html=True)
-                start_time = st.number_input("start time (second)", key=best.title, value=-1)
-                end_time   = st.number_input("end time (second)", key=best.videoid)
+                start_time = st.number_input("start time (second)", key=best.title, value=0, step=1)
+                end_time   = st.number_input("end time (second)", key=best.videoid, step=1)
 
                 if st.button("CUT VIDEO"):
                     if (end_time != 0) & (start_time >= 0) & (start_time < end_time):

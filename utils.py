@@ -7,11 +7,11 @@ from selenium.webdriver.common.by import By
 from time import sleep
 import streamlit as st
 
-def get_keyword(scripts):
+def get_keyword(scripts, n):
     full_text = scripts
     keywords = []
     tmp = []
-    kw_extractor = yake.KeywordExtractor(top=2)   # , stopwords=stop_words
+    kw_extractor = yake.KeywordExtractor(top=n)   # , stopwords=stop_words
     keywords = kw_extractor.extract_keywords(full_text)
 
     for kw, v in keywords:
@@ -20,7 +20,7 @@ def get_keyword(scripts):
 
     return keywords
 
-def get_youtube(keyword_list):
+def get_youtube(keyword_list, n):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')  
     options.add_argument('--no-sandbox')
@@ -28,7 +28,7 @@ def get_youtube(keyword_list):
     options.add_experimental_option("excludeSwitches", ["enable-logging"])
     browser = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
     
-    Video_num = 2
+    Video_num = n
     url_info_list       = {}   # url info list
     total_url           = []   # 스크립트 하나에 해당하는 전체 url
     url_list = []
