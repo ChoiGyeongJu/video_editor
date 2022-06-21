@@ -37,6 +37,8 @@ st.markdown("""
 .bottom-line {margin-top: 15px;border-bottom: 1px solid black;}
 .footer {margin-top: 250px;margin-bottom: -160px;color: gray;}
 .explain {font-size: 26px;font-weight: 600;}
+.thumb {width: auto;display: flex;justify-content: center;margin-top: 200px;margin-left: 50px;}
+.video-info {font-size: 18px; font-weight: 600;margin-top: 30px;margin-left: 30px;}
 </style>
 """, unsafe_allow_html=True)
 hide_st_style = """
@@ -155,6 +157,7 @@ for i in range(len(st.session_state.menu_title)):
         else:   # 비디오 자르고 자른것들 보는 부분
             url = st.session_state.youtube_url[i-1]
             col1, col2 = st.columns(2)
+            cols = st.columns(3)
             best     = pafy.new(url)
             res_list = []
             for j in best.videostreams:
@@ -165,12 +168,17 @@ for i in range(len(st.session_state.menu_title)):
                 video_index = res_list.index("video:webm@640x360")
             value = best.videostreams[video_index]
             video = value.url_https
+
             with col1:
                 st.markdown(f'<p class="video-title">{i}th YOUTUBE VIDEO</p>', unsafe_allow_html=True)
                 st.video(url)
                 st.markdown(f'<p class="sidebar-title">SET TIME {i}th VIDEO</p>', unsafe_allow_html=True)
-                start_time = st.number_input("start time (second)", key=best.title, value=0, step=1)
-                end_time   = st.number_input("end time (second)", key=best.videoid, step=1)
+
+                # times = st.slider("SET TIME", 0, best.length, (0, 0), step=1)
+                # start_time = times[0] ; end_time = times[1]
+                
+                start_time = st.number_input("start time (second)", key=best.title, value=0, min_value=0, max_value=best.length-1, step=1)
+                end_time   = st.number_input("end time (second)", key=best.videoid, step=1, max_value=best.length)
 
                 if st.button("CUT VIDEO"):
                     if (end_time != 0) & (start_time >= 0) & (start_time < end_time):
@@ -183,13 +191,18 @@ for i in range(len(st.session_state.menu_title)):
                         clip.write_videofile(clip_file_title)
                         st.session_state.clip_list.append(clip_file_title)
                         st.session_state.clip_file[i-1].append(clip_file_title)
-            
+
+            with col2:
+                st.markdown(f'<img class="thumb" src={best.bigthumb} />', unsafe_allow_html=True)
+                st.markdown(f'<p class="video-info">{best.title}</p>', unsafe_allow_html=True)
+                
             if st.session_state.clip_file[i-1] != []:
-                with col2:
-                    for ij in range(len(st.session_state.clip_file[i-1])):
-                        section = st.session_state.start_end[i-1][ij]
-                        st.markdown(f'<p class="video-title">EDITED VIDEO ({section[0]}sec ~ {math.floor(section[1])}sec)</p>', unsafe_allow_html=True)
-                        st.video(st.session_state.clip_file[i-1][ij])
+                for ij in range(len(st.session_state.clip_file[i-1])):
+                    section = st.session_state.start_end[i-1][ij]
+                    cols[ij % 3].markdown(f'<p class="video-title">({section[0]}sec ~ {math.floor(section[1])}sec)</p>', unsafe_allow_html=True)
+                    cols[ij % 3].video(st.session_state.clip_file[i-1][ij])
+                    # st.markdown(f'<p class="video-title">EDITED VIDEO ({section[0]}sec ~ {math.floor(section[1])}sec)</p>', unsafe_allow_html=True)
+                    # st.video(st.session_state.clip_file[i-1][ij])
 
 
 st.markdown(f'<p class="footer">email - gyeongju5142@gmail.com</p>', unsafe_allow_html=True)
