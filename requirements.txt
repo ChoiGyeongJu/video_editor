@@ -7,10 +7,10 @@ pafy
 youtube-dl==2020.12.2
 yake
 selenium
-seleniumbase
+seleniumbase==1.38.3
 chromedriver-binary
 webdriver-manager
 chromedriver-py
 chromedriver_autoinstaller
-setuptools==58
+setuptools==57.5.0
 ez_setup
