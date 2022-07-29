@@ -13,3 +13,5 @@ chromedriver-binary
 webdriver-manager
 chromedriver-py
 chromedriver_autoinstaller
+setuptools
+ez_setup
