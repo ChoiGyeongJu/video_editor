@@ -12,5 +12,5 @@ chromedriver-binary
 webdriver-manager
 chromedriver-py
 chromedriver_autoinstaller
-setuptools
+setuptools==58
 ez_setup
