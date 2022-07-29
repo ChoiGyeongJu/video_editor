@@ -66,7 +66,7 @@ if st.session_state.init_menu == True:
         scripts = st.text_area(label="Scripts", height=360, placeholder="TYPE OR UPLOAD SCRIPTS")
     else:
         raw_text = str(uploaded_scripts.read().lower())
-        scripts_1 = raw_text.replace('\r', '')
+        scripts_1 = raw_text.replace('\r', '') 
         scripts = scripts_1.replace('\n', '')
         st.text_area(label="Scripts", height=360, value=scripts)
 
